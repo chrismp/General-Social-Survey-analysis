@@ -1,0 +1,25 @@
+{
+    "contents" : "",
+    "created" : 1446674383702.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "251F36C3",
+    "lastKnownWriteTime" : 1446667920,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "5wu8124ju7",
+        "caption" : "gss.partiesPolviewsWordsum",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=gss.partiesPolviewsWordsum&cache_key=5wu8124ju7",
+        "displayedObservations" : 59599,
+        "environment" : "",
+        "object" : "gss.partiesPolviewsWordsum",
+        "totalObservations" : 59599,
+        "variables" : 7
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "type" : "r_dataframe"
+}

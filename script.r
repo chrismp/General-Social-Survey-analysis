@@ -34,28 +34,51 @@ gss$polviewsRecode <- ifelse(grepl('LIBERAL',gss$polviews),'LIBERAL',
   )
 )
 
+# Checking difference between parties' and ideologies' intelligence thru GSS' vocab test. For each decade. 
+gss.partiesPolviewsWordsum <- gss[
+  c(
+    'year',
+    'decade',
+    'partyid',
+    'partyidRecode',
+    'polviews',
+    'polviewsRecode',
+    'wordsum'
+  )
+]
 
-gss.partiesPolviews <- gss[c('year','decade','partyid','partyidRecode','polviews','polviewsRecode')]
+ggplot(gss.partiesPolviewsWordsum) + 
+  geom_boxplot(  
+    aes(
+      x = partyidRecode,
+      y = wordsum
+    )
+  ) + 
+  coord_flip() +
+  facet_wrap(~ decade)
+
+ggplot(gss.partiesPolviewsWordsum) + 
+  geom_boxplot(  
+    aes(
+      x = polviewsRecode,
+      y = wordsum
+    )
+  ) + 
+  coord_flip() +
+  facet_wrap(~ decade)
+# DONE
+#Note: No difference between vocab test scores of parties and ideologies.
+
+
+# Cateogrizing parties by ideology, for each year.
+gss.partiesPolviews <- gss.partiesPolviewsWordsum[,-7]
+
 gss.partiesPolviews <- gss.partiesPolviews[
   is.na(gss.partiesPolviews$partyidRecode)==FALSE,
 ]
 
 gss.partiesPolviews <- gss.partiesPolviews[
   is.na(gss.partiesPolviews$polviewsRecode)==FALSE,
-]
-
-gss.partiesPolviewsCount <- count(
-  gss.partiesPolviews,
-  decade,
-  year,
-  partyidRecode,
-  polviewsRecode
-)
-gss.partiesPolviewsCount <- gss.partiesPolviewsCount[
-  is.na(gss.partiesPolviewsCount$partyidRecode)==FALSE,
-]
-gss.partiesPolviewsCount <- gss.partiesPolviewsCount[
-  is.na(gss.partiesPolviewsCount$polviewsRecode)==FALSE,
 ]
 
 ggplot(
@@ -74,6 +97,6 @@ ggplot(
   ) +
   facet_grid(decade ~ partyidRecode) + 
   coord_polar(theta = 'y') 
-  
+
 
 
