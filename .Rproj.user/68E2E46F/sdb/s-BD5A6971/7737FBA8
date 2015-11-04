@@ -1,0 +1,25 @@
+{
+    "contents" : "",
+    "created" : 1446663826288.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "7737FBA8",
+    "lastKnownWriteTime" : 8751745738707202931,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "k999j4gby2",
+        "caption" : "gss.partyPolviewsCount",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=gss.partyPolviewsCount&cache_key=k999j4gby2",
+        "displayedObservations" : 252,
+        "environment" : "",
+        "object" : "gss.partyPolviewsCount",
+        "totalObservations" : 252,
+        "variables" : 4
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "type" : "r_dataframe"
+}

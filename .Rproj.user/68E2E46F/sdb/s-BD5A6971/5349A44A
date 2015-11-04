@@ -1,0 +1,17 @@
+{
+    "contents" : "# SPSS downloads page : http://www3.norc.org/GSS+Website/Download/SPSS+Format/\n# Download \"Cumulative data set (cross-sectional samples from all years)\"\n# Unzip and put '.sav' file in 'raw' folder, referred to in code below \n \n# Import SPSS into R tutorial: http://dmwiig.net/2014/08/03/r-tutorial-using-r-to-work-with-datasets-from-the-norc-general-social-science-survey/\n\ninstall.packages('Hmisc')\ninstall.packages('foreign')\n\nlibrary(Hmisc)\n\ngss <- spss.get('raw/GSS7214_R4.sav', use.value.labels=TRUE)\n",
+    "created" : 1446657985693.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3839400858",
+    "id" : "5349A44A",
+    "lastKnownWriteTime" : 1446667920,
+    "path" : "C:/Users/cpersaud/Desktop/GSS 1972 to 2014/importGSS.r",
+    "project_path" : "importGSS.r",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

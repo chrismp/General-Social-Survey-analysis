@@ -3,8 +3,10 @@
 # http://stackoverflow.com/questions/13615562/ggplot-donut-chart
 # http://www.sthda.com/english/wiki/ggplot2-pie-chart-quick-start-guide-r-software-and-data-visualization
 
-install.packages('dplyr')
-install.packages('ggplot2')
+library(dplyr)
+library(ggplot2)
+library(scales)
+library(reshape2)
 
 gss$decade <- ifelse(gss$year<1980,'1970s',
                      ifelse(gss$year<1990,'1980s',
@@ -34,50 +36,44 @@ gss$polviewsRecode <- ifelse(grepl('LIBERAL',gss$polviews),'LIBERAL',
 
 
 gss.partiesPolviews <- gss[c('year','decade','partyid','partyidRecode','polviews','polviewsRecode')]
+gss.partiesPolviews <- gss.partiesPolviews[
+  is.na(gss.partiesPolviews$partyidRecode)==FALSE,
+]
 
-# A pie chart = stacked bar chart + polar coordinates
+gss.partiesPolviews <- gss.partiesPolviews[
+  is.na(gss.partiesPolviews$polviewsRecode)==FALSE,
+]
 
-
-df <- data.frame(
-  variable = c("resembles", "does not resemble"),
-  value = c(80, 20)
+gss.partiesPolviewsCount <- count(
+  gss.partiesPolviews,
+  decade,
+  year,
+  partyidRecode,
+  polviewsRecode
 )
+gss.partiesPolviewsCount <- gss.partiesPolviewsCount[
+  is.na(gss.partiesPolviewsCount$partyidRecode)==FALSE,
+]
+gss.partiesPolviewsCount <- gss.partiesPolviewsCount[
+  is.na(gss.partiesPolviewsCount$polviewsRecode)==FALSE,
+]
 
 ggplot(
-  df,
+  gss.partiesPolviews,
   aes(
-    x='',
-    y=value,
-    fill=variable
+    x = partyidRecode,
+    fill = polviewsRecode
   )
 ) +
   geom_bar(
-    width=1,
-    stat='identity'
+    position = 'fill',
+    stat = 'bin'
   ) +
-  scale_fill_manual(values = c('red','yellow')) + 
-  coord_polar('y', start=pi/1.4) + 
-  labs(title='Pac Man')
-
-
-ggplot(
-  gss.partiesPolviews[is.na(gss.partiesPolviews$polviewsRecode)==FALSE,],
-  aes(
-    x=factor(year),
-    fill=polviewsRecode
-  )
-) + 
-  geom_bar(
-    width=1,
-    stat='bin'
+  scale_y_continuous(
+    labels = percent_format()
   ) +
-  scale_fill_manual(
-    values = c('#fc8d62','#66c2a5','#8da0cb')
-  )
-
-
-
-
-
+  facet_grid(decade ~ partyidRecode) + 
+  coord_polar(theta = 'y') 
+  
 
 
