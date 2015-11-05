@@ -1,0 +1,18 @@
+{
+    "contents" : "# http://docs.ggplot2.org/current/coord_polar.html\n# http://www.r-chart.com/2010/07/pie-charts-in-ggplot2.html\n# http://stackoverflow.com/questions/13615562/ggplot-donut-chart\n# http://www.sthda.com/english/wiki/ggplot2-pie-chart-quick-start-guide-r-software-and-data-visualization\n\nlibrary(dplyr)\nlibrary(ggplot2)\nlibrary(scales)\nlibrary(reshape2)\n\ngss$decade <- ifelse(gss$year<1980,'1970s',\n                     ifelse(gss$year<1990,'1980s',\n                            ifelse(gss$year<2000,'1990s',\n                                   ifelse(gss$year<2010,'2000s',\n                                          '2010s'\n                                    )\n                             )\n                      )\n               )\n\ngss$partyidRecode <- ifelse(gss$partyid=='STRONG DEMOCRAT' | gss$partyid=='NOT STR DEMOCRAT', 'DEMOCRAT',\n  ifelse(gss$partyid=='IND,NEAR DEM' | gss$partyid=='INDEPENDENT' | gss$partyid=='IND,NEAR REP', 'INDEPENDENT',\n    ifelse(gss$partyid=='NOT STR REPUBLICAN' | gss$partyid=='STRONG REPUBLICAN', 'REPUBLICAN',\n      NA\n    )\n  )\n)\n\ngss$polviewsRecode <- ifelse(grepl('LIBERAL',gss$polviews),'LIBERAL',\n ifelse(grepl('MODERATE',gss$polviews),'MODERATE',\n    ifelse(grepl('CONSERVATIVE',gss$polviews),'CONSERVATIVE',\n      NA\n    )\n  )\n)\n\n# Checking difference between parties' and ideologies' intelligence thru GSS' vocab test. For each decade. \ngss.partiesPolviewsWordsum <- gss[\n  c(\n    'year',\n    'decade',\n    'partyid',\n    'partyidRecode',\n    'polviews',\n    'polviewsRecode',\n    'wordsum'\n  )\n]\n\nggplot(gss.partiesPolviewsWordsum) + \n  geom_boxplot(  \n    aes(\n      x = partyidRecode,\n      y = wordsum\n    )\n  ) + \n  coord_flip() +\n  facet_wrap(~ decade)\n\nggplot(gss.partiesPolviewsWordsum) + \n  geom_boxplot(  \n    aes(\n      x = polviewsRecode,\n      y = wordsum\n    )\n  ) + \n  coord_flip() +\n  facet_wrap(~ decade)\n# DONE\n#Note: No difference between vocab test scores of parties and ideologies.\n\n\n# Cateogrizing parties by ideology, for each year.\ngss.partiesPolviews <- gss.partiesPolviewsWordsum[,-7]\n\ngss.partiesPolviews <- gss.partiesPolviews[\n  is.na(gss.partiesPolviews$partyidRecode)==FALSE,\n]\n\ngss.partiesPolviews <- gss.partiesPolviews[\n  is.na(gss.partiesPolviews$polviewsRecode)==FALSE,\n]\n\nggplot(\n  gss.partiesPolviews,\n  aes(\n    x = partyidRecode,\n    fill = polviewsRecode\n  )\n) +\n  geom_bar(\n    position = 'fill',\n    stat = 'bin'\n  ) +\n  scale_y_continuous(\n    labels = percent_format()\n  ) +\n  facet_grid(decade ~ partyidRecode) + \n  coord_polar(theta = 'y')",
+    "created" : 1446581082173.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "373369029",
+    "id" : "3754B289",
+    "lastKnownWriteTime" : 1446741096,
+    "path" : "C:/Users/cpersaud/Desktop/GSS 1972 to 2014/script.r",
+    "project_path" : "script.r",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

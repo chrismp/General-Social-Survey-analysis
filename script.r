@@ -96,7 +96,4 @@ ggplot(
     labels = percent_format()
   ) +
   facet_grid(decade ~ partyidRecode) + 
-  coord_polar(theta = 'y') 
-
-
-
+  coord_polar(theta = 'y')
